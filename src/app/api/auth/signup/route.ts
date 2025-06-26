@@ -15,7 +15,6 @@ export async function POST(req:Request){
     if (password.length < 8) {
         return NextResponse.json({message:"Password too short"}, {status:400})
     }
-    //Hola bebé!
     if (!/^[a-zA-Z0-9]+$/.test(username)) {
         return NextResponse.json({message:"Invalid username"}, {status:400})
     }
@@ -34,7 +33,6 @@ export async function POST(req:Request){
             email
         });
         const savedUser = await user.save();
-        console.log(savedUser);
         return NextResponse.json(savedUser);
     }
     catch(err){
