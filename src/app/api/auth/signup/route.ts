@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/libs/mongodb";
 
 export async function POST(req:Request){
+    console.log("peticion de register recibida");
     const {username, password, email} = await req.json()
     
     if(!username || !email || !password) return NextResponse.json({message:"Invalid fields"}, {status:400})
@@ -33,7 +34,10 @@ export async function POST(req:Request){
             email
         });
         const savedUser = await user.save();
+        console.log("peticion de register terminada");
+        console.log(savedUser);
         return NextResponse.json(savedUser);
+
     }
     catch(err){
         console.log(err);

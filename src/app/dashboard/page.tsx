@@ -1,15 +1,20 @@
+//Client component
 "use client";
 
+//React & Next imports
 import { useSession } from "next-auth/react";
 
-export default function Dashboard() {
-    const { data: session, status, update } = useSession();
+//Components
+import Header from "../components/header/Header";
 
-    console.log(session, status);
+export default function Dashboard() {
+    const { data: session } = useSession();
+    const user = session?.user;
+    const userName = user?.name || "there!";
 
     return (
         <>
-            <div>Dashboard</div>
+            <Header children={`Hello, ${userName}`} />
         </>
     )
 }
