@@ -71,3 +71,30 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ message: "Error deleting backlog item", error }, { status: 500 });
   }
 }
+
+export async function PATCH(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  await connectDB();
+
+  try {
+    const { _id, title, description, status } = await req.json();
+
+    const updated = await Backlog.findByIdAndUpdate(
+      _id,
+      { title, description, status },
+      { new: true }
+    );
+
+    if (!updated) {
+      return NextResponse.json({ message: "Item no encontrado" }, { status: 404 });
+    }
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    return NextResponse.json({ message: "Error al actualizar", error }, { status: 500 });
+  }
+}
