@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 
 //Components
 import Header from "../components/header/Header";
+import Backlog from "../components/devlterTools/backlog/backlog";
 
 export default function Dashboard() {
     const { data: session } = useSession();
@@ -15,6 +16,7 @@ export default function Dashboard() {
     return (
         <>
             <Header children={`Hello, ${userName}`} />
+            <Backlog />
         </>
     )
 }

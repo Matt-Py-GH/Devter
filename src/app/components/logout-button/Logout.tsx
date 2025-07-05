@@ -1,4 +1,3 @@
-import axios from "axios";
 import { LogOutIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -28,4 +27,4 @@ export default function LogoutButton({ ...rest }: LogoutButtonProps) {
         </button >
 
     )
-}
+}   
