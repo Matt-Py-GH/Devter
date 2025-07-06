@@ -10,7 +10,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 //Axios for more pleasure
 import axios from "axios";
-import { set } from "mongoose";
 
 type BacklogItem = {
     _id: string;
@@ -20,7 +19,7 @@ type BacklogItem = {
 };
 
 export default function MiniBacklog() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [items, setItems] = useState<BacklogItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

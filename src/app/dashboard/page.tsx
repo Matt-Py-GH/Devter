@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 //Components
 import Header from "../components/header/Header";
 import Backlog from "../components/devlterTools/backlog/Backlog";
+import PaintWindow from "../components/devlterTools/pizarra/Pizarra";
 
 export default function Dashboard() {
     const { data: session } = useSession();
@@ -17,6 +18,8 @@ export default function Dashboard() {
         <>
             <Header children={`Hello, ${userName}`} />
             <Backlog />
+            <PaintWindow />
+
         </>
     )
 }
