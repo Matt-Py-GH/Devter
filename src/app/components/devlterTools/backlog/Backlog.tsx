@@ -88,7 +88,7 @@ export default function MiniBacklog() {
     );
 
     return (
-        <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto mb-4 max-h-[80vh] flex flex-col mt-4">
+        <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto mb-4 max-h-[80vh] flex flex-col mt-4 transition-all">
             <div
                 onClick={() => setOpen(!open)}
                 className="flex justify-between items-center px-4 py-3 cursor-pointer select-none border-neutral-700"
