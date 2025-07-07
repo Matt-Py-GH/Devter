@@ -113,7 +113,7 @@ export default function MiniPaintWindow() {
                     </span>
                 </div>
             ) : (
-                <div className="w-[700px] h-[400px] bg-neutral-900 border border-white rounded-lg">
+                <div className="w-[700px] h-[400px] bg-black border border-white rounded-lg">
                     <div
                         className="flex justify-between items-center bg-white text-black text-sm px-3 py-1 cursor-move rounded-t-lg select-none"
                         onContextMenu={(e) => e.preventDefault()}
