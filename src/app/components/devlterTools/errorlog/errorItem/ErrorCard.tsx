@@ -2,18 +2,12 @@
 
 import { useState } from "react";
 import { Edit3, Trash2, Check, X } from "lucide-react";
-
-type ErrorItem = {
-    _id: string;
-    title: string;
-    description?: string;
-    status: "bug" | "fixing" | "fixed";
-};
+import { Bug } from "../../adderComponent/Adder";
 
 type Props = {
-    bug: ErrorItem;
+    bug: Bug;
     onDelete: (id: string) => void;
-    onUpdate: (updatedItem: ErrorItem) => void;
+    onUpdate: (updatedItem: Bug) => void;
 };
 
 export default function BugCard({ bug, onDelete, onUpdate }: Props) {
@@ -27,7 +21,7 @@ export default function BugCard({ bug, onDelete, onUpdate }: Props) {
             _id: bug._id,
             title: editTitle,
             description: editDescription,
-            status: editStatus,
+            status: editStatus
         });
         setIsEditing(false);
     };
@@ -47,7 +41,7 @@ export default function BugCard({ bug, onDelete, onUpdate }: Props) {
                 />
                 <select
                     value={editStatus}
-                    onChange={(e) => setEditStatus(e.target.value as ErrorItem["status"])}
+                    onChange={(e) => setEditStatus(e.target.value as Bug["status"])}
                     className="bg-neutral-700 rounded px-2 py-1 text-sm text-white"
                 >
                     <option value="bug">Bug</option>

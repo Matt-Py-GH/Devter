@@ -1,8 +1,11 @@
 "use client";
 
 //Components
-import BacklogItemCard from "./backlog-item/BacklogItem";
-import ItemAdder from "./item-adder/ItemAdder";
+// import BacklogItemCard from "./backlog-item/BacklogItem";
+import ItemCard from "../cardComponent/CardComponent"
+import Adder from "../adderComponent/Adder";
+
+import { Item } from "../adderComponent/Adder";
 
 //React & lucide
 import { useState, useEffect } from "react";
@@ -11,16 +14,10 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 //Axios for more pleasure
 import axios from "axios";
 
-type BacklogItem = {
-    _id: string;
-    title: string;
-    description?: string;
-    status: "todo" | "doing" | "done";
-};
 
 export default function MiniBacklog() {
     const [open, setOpen] = useState(false);
-    const [items, setItems] = useState<BacklogItem[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
@@ -47,7 +44,7 @@ export default function MiniBacklog() {
         fetchBacklog();
     }, []);
 
-    const updateItem = async (updatedItem: BacklogItem) => {
+    const updateItem = async (updatedItem: Item) => {
         setLoading(true);
         setError(null);
         try {
@@ -100,7 +97,7 @@ export default function MiniBacklog() {
             {open && (
                 <div className="flex flex-col flex-grow p-4 space-y-4 overflow-hidden">
                     {/* Item adder */}
-                    <ItemAdder onItemAdded={(newItem) => setItems(prev => [newItem, ...prev])} />
+                    <Adder location="backlog" api="/api/backlog" onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])} />
 
                     {/* Mensajes de estado */}
                     {loading && <p className="text-center text-sm text-neutral-400">Cargando...</p>}
@@ -131,7 +128,7 @@ export default function MiniBacklog() {
                     </div>
                     <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
                         {filteredItems.map(item => (
-                            <BacklogItemCard
+                            <ItemCard
                                 key={item._id}
                                 item={item}
                                 onDelete={deleteItem}

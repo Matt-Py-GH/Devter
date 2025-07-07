@@ -5,36 +5,31 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import axios from 'axios';
 
-import BugCard from './errorItem/ErrorCard';
-import ErrorAdder from './errorAdder/ErrorAdder';
+// import BugCard from './errorItem/ErrorCard';
+import Adder from '../adderComponent/Adder';
+import { Bug } from '../adderComponent/Adder';
+import BugCard from '../cardComponent/CardComponent';
 
-type ErrorItem = {
-    _id: string;
-    title: string;
-    description?: string;
-    status: "bug" | "fixing" | "fixed";
-};
 
 export default function MiniErrorLog() {
     const [addButton, setAddButton] = useState("+")
     const [adderOpen, setAdderOpen] = useState(false)
     const [open, setOpen] = useState(false)
-    const [bugs, setBugs] = useState<ErrorItem[]>([]);
+    const [bugs, setBugs] = useState<Bug[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
 
-    const updateBug = async (updatedBug: ErrorItem) => {
+    const updateBug = async (updatedBug: Bug) => {
         setLoading(true);
         setError(null);
-
         try {
             const res = await axios.patch("/api/bugs", updatedBug)
-            const newItem = res.data;
+            const newBug = res.data;
 
             setBugs(prev =>
-                prev.map(item => (item._id === newItem._id ? newItem : item))
+                prev.map(bug => (bug._id === newBug._id ? newBug : bug))
             );
 
         } catch (error: any) {
@@ -94,15 +89,19 @@ export default function MiniErrorLog() {
         <>
             {/* Toggle lateral */}
             <div
-                onClick={() => setOpen(!open)}
+                onClick={() => {
+                    setOpen(!open)
+                    setAdderOpen(false)
+                    setAddButton("+")
+                }}
                 className="fixed left-0 z-40 flex items-center gap-2 bg-neutral-900 text-white px-3 py-2 rounded-r-2xl shadow-md cursor-pointer select-none border border-white/10 transition-all"
-                style={{ top: toggleTop }}
-            >
+                style={{ top: toggleTop }}>
+
                 <span className="font-mono text-sm">Errors</span>
                 {open ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
             </div>
 
-            {adderOpen ? (<ErrorAdder onErrorAdded={(newError) => setBugs(prev => [newError, ...prev])} />) : null}
+            {adderOpen ? (<Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} />) : null}
             {/* Panel deslizable */}
             <div
                 className={`fixed left-0 w-90 bg-neutral-900 text-white shadow-2xl z-30 transition-transform duration-300 ease-in-out rounded-r-2xl border-r border-white/10 ${open ? 'translate-x-0' : '-translate-x-full'}`}
@@ -127,7 +126,7 @@ export default function MiniErrorLog() {
                     </button>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4">
                         <input
-                            type="text"
+                            type="search"
                             placeholder="🔍 Buscar por nombre"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -155,7 +154,7 @@ export default function MiniErrorLog() {
                             {filteredBugs.map(bug => (
                                 <BugCard
                                     key={bug._id}
-                                    bug={bug}
+                                    item={bug}
                                     onDelete={deleteBug}
                                     onUpdate={updateBug}
                                 />

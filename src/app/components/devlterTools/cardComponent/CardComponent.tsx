@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import { Edit3, Trash2, Check, X } from "lucide-react";
-import { Item } from "../../adderComponent/Adder";
+import { Bug, Item } from "../adderComponent/Adder";
 
 type Props = {
-    item: Item;
+    item: Bug | Item;
     onDelete: (id: string) => void;
-    onUpdate: (updatedItem: Item) => void;
+    onUpdate: (updatedItem: any) => void;
 };
 
-export default function BacklogItemCard({ item, onDelete, onUpdate }: Props) {
+export function isBug(item: Bug | Item): item is Bug {
+    return item.status === "bug" || item.status === "fixing" || item.status === "fixed";
+}
+
+export default function Card({ item, onDelete, onUpdate }: Props) {
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(item.title);
     const [editDescription, setEditDescription] = useState(item.description || "");
@@ -25,6 +29,7 @@ export default function BacklogItemCard({ item, onDelete, onUpdate }: Props) {
         });
         setIsEditing(false);
     };
+
 
     if (isEditing) {
         return (
@@ -41,13 +46,26 @@ export default function BacklogItemCard({ item, onDelete, onUpdate }: Props) {
                 />
                 <select
                     value={editStatus}
-                    onChange={(e) => setEditStatus(e.target.value as Item["status"])}
+                    onChange={(e) =>
+                        setEditStatus(e.target.value as Bug["status"] | Item["status"])
+                    }
                     className="bg-neutral-700 rounded px-2 py-1 text-sm text-white"
                 >
-                    <option value="todo">Todo</option>
-                    <option value="doing">Doing</option>
-                    <option value="done">Done</option>
+                    {isBug(item) ? (
+                        <>
+                            <option value="bug">🐞 Bug</option>
+                            <option value="fixing">🛠️ Fixing</option>
+                            <option value="fixed">✅ Fixed</option>
+                        </>
+                    ) : (
+                        <>
+                            <option value="todo">📋 Todo</option>
+                            <option value="doing">🔄 Doing</option>
+                            <option value="done">✅ Done</option>
+                        </>
+                    )}
                 </select>
+
                 <div className="flex justify-end gap-2">
                     <button onClick={handleSave} className="text-green-400 hover:text-green-300"><Check size={16} /></button>
                     <button onClick={() => setIsEditing(false)} className="text-red-400 hover:text-red-300"><X size={16} /></button>
@@ -61,11 +79,17 @@ export default function BacklogItemCard({ item, onDelete, onUpdate }: Props) {
             <div className="flex justify-between items-center">
                 <span className="font-semibold">{item.title}</span>
                 <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-mono ${item.status === "todo"
-                        ? "bg-yellow-400 text-black"
-                        : item.status === "doing"
-                            ? "bg-blue-400 text-white"
-                            : "bg-green-400 text-black"
+                    className={`text-xs px-2 py-0.5 rounded-full font-mono ${isBug(item)
+                        ? item.status === "bug"
+                            ? "bg-red-400 text-black"
+                            : item.status === "fixing"
+                                ? "bg-yellow-600 text-white"
+                                : "bg-green-400 text-black"
+                        : item.status === "todo"
+                            ? "bg-yellow-500 text-black"
+                            : item.status === "doing"
+                                ? "bg-blue-500 text-white"
+                                : "bg-green-500 text-black"
                         }`}
                 >
                     {item.status}
