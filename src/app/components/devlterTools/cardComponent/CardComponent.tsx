@@ -7,7 +7,7 @@ import { Bug, Item } from "../adderComponent/Adder";
 type Props = {
     item: Bug | Item;
     onDelete: (id: string) => void;
-    onUpdate: (updatedItem: any) => void;
+    onUpdate: (updatedItem: Item | Bug) => void;
 };
 
 export function isBug(item: Bug | Item): item is Bug {

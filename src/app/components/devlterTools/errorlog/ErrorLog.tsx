@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import axios from 'axios';
 
-// import BugCard from './errorItem/ErrorCard';
 import Adder from '../adderComponent/Adder';
 import { Bug } from '../adderComponent/Adder';
 import BugCard from '../cardComponent/CardComponent';
@@ -156,7 +155,12 @@ export default function MiniErrorLog() {
                                     key={bug._id}
                                     item={bug}
                                     onDelete={deleteBug}
-                                    onUpdate={updateBug}
+                                    onUpdate={(updatedItem) => {
+                                        if ('status' in updatedItem && ['bug', 'fixing', 'fixed'].includes(updatedItem.status)) {
+                                            updateBug(updatedItem as Bug);
+                                        }
+                                    }}
+
                                 />
                             ))}
                         </ul>

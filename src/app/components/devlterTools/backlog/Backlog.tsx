@@ -1,7 +1,6 @@
 "use client";
 
 //Components
-// import BacklogItemCard from "./backlog-item/BacklogItem";
 import ItemCard from "../cardComponent/CardComponent"
 import Adder from "../adderComponent/Adder";
 
@@ -15,7 +14,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import axios from "axios";
 
 
-export default function MiniBacklog() {
+export default function Backlog() {
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
@@ -132,7 +131,11 @@ export default function MiniBacklog() {
                                 key={item._id}
                                 item={item}
                                 onDelete={deleteItem}
-                                onUpdate={updateItem}
+                                onUpdate={(updatedItem) => {
+                                    if ('status' in updatedItem && ['todo', 'doing', 'done'].includes(updatedItem.status)) {
+                                        updateItem(updatedItem as Item)
+                                    }
+                                }}
                             />
                         ))}
                     </ul>
