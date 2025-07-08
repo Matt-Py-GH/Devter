@@ -10,7 +10,7 @@ import { Bug } from '../adderComponent/Adder';
 import BugCard from '../cardComponent/CardComponent';
 
 
-export default function MiniErrorLog() {
+export default function ErrorLog() {
     const [addButton, setAddButton] = useState("+")
     const [adderOpen, setAdderOpen] = useState(false)
     const [open, setOpen] = useState(false)
@@ -128,7 +128,7 @@ export default function MiniErrorLog() {
                             type="search"
                             placeholder="🔍 Buscar por nombre"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={e => setSearchTerm(e.target.value)}
                             className="w-full sm:w-auto flex-grow bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
                         />
                         <select
@@ -155,7 +155,7 @@ export default function MiniErrorLog() {
                                     key={bug._id}
                                     item={bug}
                                     onDelete={deleteBug}
-                                    onUpdate={(updatedItem) => {
+                                    onUpdate={updatedItem => {
                                         if ('status' in updatedItem && ['bug', 'fixing', 'fixed'].includes(updatedItem.status)) {
                                             updateBug(updatedItem as Bug);
                                         }

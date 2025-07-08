@@ -9,6 +9,7 @@ import Header from "../components/header/Header";
 import Backlog from "../components/devlterTools/backlog/Backlog";
 import PaintWindow from "../components/devlterTools/pizarra/Pizarra";
 import ErrorLog from "../components/devlterTools/errorlog/ErrorLog";
+import CMD from "../components/devlterTools/consola/CMD"
 
 export default function Dashboard() {
     const { data: session } = useSession();
@@ -21,6 +22,7 @@ export default function Dashboard() {
             <Backlog />
             <PaintWindow />
             <ErrorLog />
+            <CMD />
         </>
     )
 }

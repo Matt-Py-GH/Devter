@@ -87,60 +87,61 @@ export default function Backlog() {
         <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto mb-4 max-h-[80vh] flex flex-col mt-4 transition-all">
             <div
                 onClick={() => setOpen(!open)}
-                className="flex justify-between items-center px-4 py-3 cursor-pointer select-none border-neutral-700"
-            >
-                <span className="text-lg font-mono">📋 Backlog</span>
+                className="flex justify-between items-center px-4 py-3 cursor-pointer select-none border-neutral-700">
+
+                <span className="text-lg font-mono">Backlog</span>
                 {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </div>
 
-            {open && (
-                <div className="flex flex-col flex-grow p-4 space-y-4 overflow-hidden">
-                    {/* Item adder */}
-                    <Adder location="backlog" api="/api/backlog" onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])} />
+            <div
+                className={`flex flex-col flex-grow p-4 space-y-4 overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}>
 
-                    {/* Mensajes de estado */}
-                    {loading && <p className="text-center text-sm text-neutral-400">Cargando...</p>}
-                    {error && <p className="text-center text-sm text-red-500">{error}</p>}
+                {/* Item adder */}
+                <Adder location="backlog" api="/api/backlog" onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])} />
 
-                    {/* Búsqueda y filtro */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4">
-                        <input
-                            type="text"
-                            placeholder="🔍 Buscar por título"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full sm:w-auto flex-grow bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
-                        />
-                        <select
-                            value={statusFilter}
-                            onChange={e => {
-                                setStatusFilter(e.target.value);
-                                localStorage.setItem("backlogStatusFilter", e.target.value);
-                            }}
-                            className="w-full sm:w-auto bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm text-white"
-                        >
-                            <option value="">Todos</option>
-                            <option value="todo">🟡 Todo</option>
-                            <option value="doing">🔵 Doing</option>
-                            <option value="done">🟢 Done</option>
-                        </select>
-                    </div>
-                    <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
-                        {filteredItems.map(item => (
-                            <ItemCard
-                                key={item._id}
-                                item={item}
-                                onDelete={deleteItem}
-                                onUpdate={(updatedItem) => {
-                                    if ('status' in updatedItem && ['todo', 'doing', 'done'].includes(updatedItem.status)) {
-                                        updateItem(updatedItem as Item)
-                                    }
-                                }}
-                            />
-                        ))}
-                    </ul>
+                {/* Mensajes de estado */}
+                {loading && <p className="text-center text-sm text-neutral-400">Cargando...</p>}
+                {error && <p className="text-center text-sm text-red-500">{error}</p>}
+
+                {/* Búsqueda y filtro */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4">
+                    <input
+                        type="text"
+                        placeholder="🔍 Buscar por título"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full sm:w-auto flex-grow bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
+                    />
+                    <select
+                        value={statusFilter}
+                        onChange={e => {
+                            setStatusFilter(e.target.value);
+                            localStorage.setItem("backlogStatusFilter", e.target.value);
+                        }}
+                        className="w-full sm:w-auto bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm text-white"
+                    >
+                        <option value="">Todos</option>
+                        <option value="todo">🟡 Todo</option>
+                        <option value="doing">🔵 Doing</option>
+                        <option value="done">🟢 Done</option>
+                    </select>
                 </div>
-            )}
+                <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
+                    {filteredItems.map(item => (
+                        <ItemCard
+                            key={item._id}
+                            item={item}
+                            onDelete={deleteItem}
+                            onUpdate={(updatedItem) => {
+                                if ('status' in updatedItem && ['todo', 'doing', 'done'].includes(updatedItem.status)) {
+                                    updateItem(updatedItem as Item)
+                                }
+                            }}
+                        />
+                    ))}
+                </ul>
+            </div>
+
         </div>
     );
 }
