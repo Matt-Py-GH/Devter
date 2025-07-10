@@ -21,7 +21,7 @@ export default function Backlog() {
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
-    const [openAdder, setOpenAdder] = useState(true)
+    const [openAdder, setOpenAdder] = useState(false)
 
     useEffect(() => {
         const storedFilter = localStorage.getItem("backlogStatusFilter");
@@ -93,7 +93,6 @@ export default function Backlog() {
                 <span className="text-lg font-mono">Backlog</span>
                 {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </div>
-            {/* Botón + / x en la esquina superior derecha */}
 
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out 
@@ -106,7 +105,7 @@ export default function Backlog() {
                         onClick={() => setOpenAdder(!openAdder)}
                         className="bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-sm transition"
                     >
-                        {openAdder ? "Cancelar" : "Agregar nuevo"}
+                        {openAdder ? "x" : "+"}
                     </button>
                 </div>
 

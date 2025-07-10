@@ -63,7 +63,7 @@ export default function Console() {
         <>
             {/* Consola deslizable */}
             <div
-                className={`fixed bottom-0 left-[361px] w-[600px] h-[320px] bg-black text-white border-t border-neutral-700 z-30 transition-transform duration-300 ease-in-out font-mono rounded-t-2xl shadow-xl ${open ? "translate-y-0" : "translate-y-full"}`}
+                className={`fixed bottom-0 left-[395px] w-[576px] h-[320px] bg-black text-white border-t border-neutral-700 z-30 transition-transform duration-300 ease-in-out font-mono rounded-t-2xl shadow-xl ${open ? "translate-y-0" : "translate-y-full"}`}
             >
                 {/* Botón para mostrar/ocultar consola */}
                 <div
