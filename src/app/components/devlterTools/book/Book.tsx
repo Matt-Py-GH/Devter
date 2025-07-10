@@ -97,19 +97,18 @@ export default function Book() {
                     {/* Botones de acción */}
                     <div className="flex justify-end gap-2 p-2">
                         <button
-                            className="text-neutral-400 hover:text-green-400 transition-colors px-2 py-1 rounded text-sm font-mono"
+                            className="text-white hover:text-green-400 transition-colors px-2 py-1 rounded text-sm font-mono"
                             title="Guardar"
                             onClick={handleSave}>
                             {saved ? <Check size={16} /> : <Save size={16} />}
                         </button>
                         <button
-                            className="text-neutral-400 hover:text-red-400 transition-colors px-2 py-1 rounded text-sm font-mono"
+                            className="text-white hover:text-red-400 transition-colors px-2 py-1 rounded text-sm font-mono"
                             title="Cerrar"
                             onClick={() => {
                                 setPos({ x: 280, y: 80 })
                                 setIsMinimized(true)
-                            }
-                            }>
+                            }}>
                             X
                         </button>
                     </div>

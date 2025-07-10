@@ -1,4 +1,3 @@
-//Client component
 "use client";
 
 //React & Next imports
@@ -25,6 +24,7 @@ export default function Dashboard() {
             <ErrorLog />
             <CMD />
             <Book />
+
         </>
     )
 }

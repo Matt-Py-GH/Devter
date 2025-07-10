@@ -16,7 +16,8 @@ export default function ProfileButton({ ...rest }: ProfileButtonProps) {
             <button
                 onClick={handleClick}
                 className="p-3 rounded hover:bg-neutral-800 w-12 h-12 flex items-center justify-center cursor-pointer"
-                {...rest}>
+                {...rest}
+                title="Profile">
                 <UserCog className="w-8 h-8 hover:cursor-pointer" />
             </button>
             <LogoutButton />
