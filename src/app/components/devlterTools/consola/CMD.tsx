@@ -68,8 +68,8 @@ export default function Console() {
                 {/* Botón para mostrar/ocultar consola */}
                 <div
                     onClick={() => setOpen(!open)}
-                    className={`absolute -top-[32px] left-1/2 -translate-x-1/2 z-40 cursor-pointer transition-all duration-300 ${open ? "h-6" : "h-8"}`}
-                >
+                    className={`absolute -top-[32px] left-1/2 -translate-x-1/2 z-40 cursor-pointer transition-all duration-300 ${open ? "h-6" : "h-8"}`}>
+
                     <div className="bg-neutral-800 text-white px-3 py-1 rounded-t-xl border border-neutral-700 shadow-md hover:bg-neutral-700 transition">
                         {open ? <ChevronsDown size={16} /> : <ChevronsUp size={20} />}
                     </div>
@@ -79,7 +79,7 @@ export default function Console() {
                 <div className="absolute top-2 right-2 z-40 cursor-pointer">
                     <button
                         onClick={() => setShowAdder(!showAdder)}
-                        className="bg-neutral-700 hover:bg-neutral-600 text-white p-1 rounded transition cursor-pointer">
+                        className="hover:bg-neutral-600 text-white p-1 rounded transition cursor-pointer">
                         {showAdder ? <X size={16} /> : <Plus size={16} />}
                     </button>
                 </div>
@@ -114,8 +114,7 @@ export default function Console() {
                                         title="Eliminar"
                                         onClick={() => {
                                             handleDeleteCommand(cmd._id)
-                                        }}
-                                    >
+                                        }}>
                                         <Trash2 size={17} />
                                     </button>
                                 </div>

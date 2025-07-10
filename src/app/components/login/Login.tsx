@@ -31,7 +31,7 @@ export default function LoginForm() {
     return (
         <>
             <h1 className="text-6xl text-center mt-4">Devlter</h1>
-            <div className="mt-30 bg-black flex items-center justify-center">
+            <div className="mt-30 flex items-center justify-center">
                 <form
                     onSubmit={handleSubmit}
                     className="border border-white max-w-md mt-0 p-6 shadow-md rounded flex flex-col gap-4 bg-neutral-900 rounded-2xl"

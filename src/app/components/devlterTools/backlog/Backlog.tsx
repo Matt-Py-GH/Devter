@@ -7,8 +7,8 @@ import Adder from "../adderComponent/Adder";
 import { Item } from "../adderComponent/Adder";
 
 //React & lucide
-import { useState, useEffect } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect, use } from "react";
+import { ChevronDown, ChevronUp, X, Plus } from "lucide-react";
 
 //Axios for more pleasure
 import axios from "axios";
@@ -21,6 +21,7 @@ export default function Backlog() {
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
+    const [openAdder, setOpenAdder] = useState(true)
 
     useEffect(() => {
         const storedFilter = localStorage.getItem("backlogStatusFilter");
@@ -92,14 +93,22 @@ export default function Backlog() {
                 <span className="text-lg font-mono">Backlog</span>
                 {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </div>
+            {/* Botón + / x en la esquina superior derecha */}
 
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out 
-                ${open ? "max-h-[80vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"} flex flex-col flex-grow space-y-4`}>
+    ${open ? "max-h-[80vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"} flex flex-col flex-grow space-y-4`}
+            >
 
-
-                {/* Item adder */}
-                <Adder location="backlog" api="/api/backlog" onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])} />
+                {/* Botón + / Cancelar para mostrar el ItemAdder */}
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => setOpenAdder(!openAdder)}
+                        className="bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-sm transition"
+                    >
+                        {openAdder ? "Cancelar" : "Agregar nuevo"}
+                    </button>
+                </div>
 
                 {/* Mensajes de estado */}
                 {loading && <p className="text-center text-sm text-neutral-400">Cargando...</p>}
@@ -116,7 +125,7 @@ export default function Backlog() {
                     />
                     <select
                         value={statusFilter}
-                        onChange={e => {
+                        onChange={(e) => {
                             setStatusFilter(e.target.value);
                             localStorage.setItem("backlogStatusFilter", e.target.value);
                         }}
@@ -128,6 +137,19 @@ export default function Backlog() {
                         <option value="done">🟢 Done</option>
                     </select>
                 </div>
+
+                {/* ItemAdder */}
+                {openAdder && (
+                    <div className="bg-neutral-800 p-3 rounded-lg border border-neutral-700">
+                        <Adder
+                            location="backlog"
+                            api="/api/backlog"
+                            onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])}
+                        />
+                    </div>
+                )}
+
+                {/* Lista de ítems */}
                 <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
                     {filteredItems.map(item => (
                         <ItemCard
@@ -136,14 +158,13 @@ export default function Backlog() {
                             onDelete={deleteItem}
                             onUpdate={(updatedItem) => {
                                 if ('status' in updatedItem && ['todo', 'doing', 'done'].includes(updatedItem.status)) {
-                                    updateItem(updatedItem as Item)
+                                    updateItem(updatedItem as Item);
                                 }
                             }}
                         />
                     ))}
                 </ul>
             </div>
-
         </div>
     );
 }
