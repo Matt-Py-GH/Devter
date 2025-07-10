@@ -1,8 +1,10 @@
 'use client';
-import { useRef, useState, useEffect } from "react";
-import { Minus, Trash2 } from "lucide-react";
 
-export default function MiniPaintWindow() {
+
+import { useRef, useState, useEffect } from "react";
+import { Minus, Trash2, Brush } from "lucide-react";
+
+export default function PaintWindow() {
     const [isMinimized, setIsMinimized] = useState(true);
     const [isDragging, setIsDragging] = useState(false);
     const [pos, setPos] = useState({ x: 330, y: 80 });
@@ -104,12 +106,11 @@ export default function MiniPaintWindow() {
                             if (e.button === 2) setIsDragging(true);
                         }}
                         onClick={() => setIsMinimized(false)}
-                        className="bg-neutral-800 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow-lg border border-white hover:bg-neutral-700 transition"
-                    >
-                        🖌️
+                        className="bg-neutral-800 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow-lg border border-white hover:bg-neutral-700 transition">
+                        <Brush size={16} />
                     </div>
                     <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition pointer-events-none whitespace-nowrap shadow">
-                        Abrir pizarra
+                        Open paint
                     </span>
                 </div>
             ) : (
@@ -121,7 +122,7 @@ export default function MiniPaintWindow() {
                             if (e.button === 2) setIsDragging(true);
                         }}
                     >
-                        🖌️ Paint
+                        <Brush size={16} /> Paint
                         <div className="flex items-center gap-2">
                             <button
                                 onClick={clearCanvas}

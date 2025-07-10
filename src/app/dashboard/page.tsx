@@ -10,7 +10,7 @@ import Backlog from "../components/devlterTools/backlog/Backlog";
 import PaintWindow from "../components/devlterTools/pizarra/Pizarra";
 import ErrorLog from "../components/devlterTools/errorlog/ErrorLog";
 import CMD from "../components/devlterTools/consola/CMD"
-import Book from "../components/devlterTools/book/book";
+import Book from "../components/devlterTools/book/Book";
 
 export default function Dashboard() {
     const { data: session } = useSession();

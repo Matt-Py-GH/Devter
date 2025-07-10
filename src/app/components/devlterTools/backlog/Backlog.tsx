@@ -7,8 +7,8 @@ import Adder from "../adderComponent/Adder";
 import { Item } from "../adderComponent/Adder";
 
 //React & lucide
-import { useState, useEffect, use } from "react";
-import { ChevronDown, ChevronUp, X, Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 //Axios for more pleasure
 import axios from "axios";
