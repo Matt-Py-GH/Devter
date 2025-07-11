@@ -79,13 +79,13 @@ export default function Console() {
                 <div className="absolute top-2 right-2 z-40 cursor-pointer">
                     <button
                         onClick={() => setShowAdder(!showAdder)}
-                        className="hover:bg-neutral-600 text-white p-1 rounded transition cursor-pointer">
+                        className="hover:bg-neutral-600 text-white p-1 rounded transition cursor-pointer mr-2">
                         {showAdder ? <X size={16} /> : <Plus size={16} />}
                     </button>
                 </div>
 
                 {/* Área de comandos */}
-                <div className="p-4 space-y-2 text-sm overflow-y-auto h-full pb-20">
+                <div className="p-4 text-sm overflow-y-auto h-full pb-20 scrollbar-thin scrollbar-thumb-neutral-600 scrollbar-track-neutral-800">
                     <p className="text-white">{">_"}</p>
                     {/* Comandos agregados se mostrarán acá en el futuro */}
                     <ul className="flex-grow overflow-y-auto pr-1 space-y-2">

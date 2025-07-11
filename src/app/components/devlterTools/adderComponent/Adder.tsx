@@ -69,7 +69,7 @@ export default function Adder({ location, api, onItemAdded }: AdderProps) {
     };
 
     return (
-        <div className={`${location === "error" ? "fixed z-50 bg-neutral-900 border border-neutral-700 rounded-br-xl p-4 shadow-md w-90 max-w-sm text-sm font-mono left-0 top-126" : ""}`}>
+        <div className={`${location === "error" ? "fixed z-50 bg-neutral-900 border border-neutral-700 rounded-br-xl p-4 shadow-md text-sm font-mono left-0 top-96" : ""}`}>
             <input
                 type="text"
                 placeholder="Title"

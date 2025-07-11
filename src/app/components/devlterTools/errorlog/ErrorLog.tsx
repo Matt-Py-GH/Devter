@@ -100,11 +100,11 @@ export default function ErrorLog() {
                 {open ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
             </div>
 
-            {adderOpen ? (<Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} />) : null}
             {/* Panel deslizable */}
             <div
                 className={`fixed left-0 w-98 bg-neutral-900 text-white shadow-2xl z-30 transition-transform duration-300 ease-in-out rounded-r-2xl border-r border-white/10 ${open ? 'translate-x-0' : '-translate-x-full'}`}
                 style={{ top: panelTop, height: `calc(100vh - ${panelTop})` }}>
+                {adderOpen ? <Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} /> : null}
 
                 <div className="relative flex flex-col h-full">
                     {/* Header */}
