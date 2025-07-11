@@ -85,7 +85,7 @@ export default function Console() {
                 </div>
 
                 {/* Área de comandos */}
-                <div className="p-4 text-sm overflow-y-auto h-full pb-20 scrollbar-thin scrollbar-thumb-neutral-600 scrollbar-track-neutral-800">
+                <div className="p-4 text-sm overflow-y-auto h-full pb-20 scrollbar-thin scrollbar-thumb-neutral-600">
                     <p className="text-white">{">_"}</p>
                     {/* Comandos agregados se mostrarán acá en el futuro */}
                     <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
