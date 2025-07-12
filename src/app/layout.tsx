@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Devlter",
+  title: "Devter",
   description: "Organize your projects with Devlter, your developer shelter.",
   icons: {
     icon: "/favicon.ico",
