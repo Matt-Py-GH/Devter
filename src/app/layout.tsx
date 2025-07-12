@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Devter",
   description: "Devter is your digital shelter for organizing code, ideas, bugs, notes and more.",
-  keywords: ["Devter", "DevTracker", "developer tools", "project organization", "coding notes"],
+  keywords: ["Devter", "DevTracker", "developer tools", "project organization", "coding notes", "dexter"],
   authors: [{ name: "Mateo Delgado", url: "https://devter.dev" }],
   creator: "Mateo Delgado",
   openGraph: {

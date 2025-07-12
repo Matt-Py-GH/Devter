@@ -31,7 +31,7 @@ export default function RegisterForm() {
     return (
         <>
 
-            <h1 className="text-6xl text-center mt-4">Devlter</h1>
+            <h1 className="text-6xl text-center mt-4">Devter</h1>
             <div className="mt-30 flex items-center justify-center">
                 <form
                     onSubmit={handleSubmit}
