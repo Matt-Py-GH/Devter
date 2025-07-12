@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   creator: "Mateo Delgado",
   openGraph: {
     title: "Devter – Your developer shelter",
-    description: "Organize your dev life with tools like Backlog, CMD, Paint, and more.",
+    description: "Organize your dev life with tools like Backlog, Console, Paint, and more.",
     url: "https://devter.dev",
     siteName: "Devter",
     images: [
@@ -46,7 +46,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +54,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* SEO extra */}
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="canonical" href="https://devter.dev" />
+        <meta httpEquiv="Content-Language" content="en" />
+
+        {/* Favicons y manifest */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {/* Optimización de fuentes */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* JSON-LD Schema mejorado */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -63,6 +78,18 @@ export default function RootLayout({
               "@type": "WebSite",
               name: "Devter",
               url: "https://devter.dev",
+              description: "Devter is your digital shelter for organizing code, ideas, bugs, notes and more.",
+              alternateName: "DevTracker",
+              creator: {
+                "@type": "Person",
+                name: "Mateo Delgado",
+                url: "https://devter.dev"
+              },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://devter.dev/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
             }),
           }}
         />
@@ -71,6 +98,5 @@ export default function RootLayout({
         <Provider>{children}</Provider>
       </body>
     </html>
-
   );
 }
