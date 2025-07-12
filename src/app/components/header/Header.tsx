@@ -14,7 +14,7 @@ interface HeaderProps extends HTMLAttributes<HTMLElement> {
 }
 
 export default function Header({ children, ...rest }: HeaderProps) {
-    const { title, setTitle, loading, error } = useProjectTitle();
+    const { title, setTitle, loading } = useProjectTitle();
     const router = useRouter();
 
     const [currentDashboard, setCurrentDashboard] = useState<"main" | "secondary">("main");

@@ -2,9 +2,7 @@ import { LogOutIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-interface LogoutButtonProps extends React.HTMLAttributes<HTMLButtonElement> { }
-
-export default function LogoutButton({ ...rest }: LogoutButtonProps) {
+export default function LogoutButton(props: React.HTMLAttributes<HTMLButtonElement>) {
     const router = useRouter();
     const logoutClass = "p-3 rounded hover:bg-neutral-800 w-12 h-12 flex items-center justify-center cursor-pointer transition"
     const handleLogout = async () => {
@@ -22,7 +20,7 @@ export default function LogoutButton({ ...rest }: LogoutButtonProps) {
         <div className="relative group flex flex-col items-center">
             <button
                 onClick={handleLogout}
-                {...rest}
+                {...props}
                 className={logoutClass}
             >
                 <LogOutIcon className="w-8 h-8 cursor-pointer" />

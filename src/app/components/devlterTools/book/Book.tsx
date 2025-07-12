@@ -1,7 +1,7 @@
 'use client';
 
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Save, Check, Notebook } from "lucide-react";
 
@@ -12,7 +12,13 @@ export default function Book() {
     const [pos, setPos] = useState({ x: 280, y: 80 });
     const [saved, setSaved] = useState(false);
 
-    const handleSave = async () => {
+    const fetchNotes = useCallback(async () => {
+        const res = await axios.get("/api/notes");
+        const notes = res.data.content;
+        setNotes(notes);
+    }, []);
+
+    const handleSave = useCallback(async () => {
         try {
             setSaved(true)
             setTimeout(() => setSaved(false), 2000)
@@ -22,7 +28,7 @@ export default function Book() {
         catch (err) {
             console.log(err);
         }
-    }
+    }, [notes, fetchNotes])
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,7 +48,8 @@ export default function Book() {
 
     // Mover ventana
     useEffect(() => {
-        fetchNotes()
+        fetchNotes();
+
         const handleMouseMove = (e: MouseEvent) => {
             if (isDragging) {
                 setPos((prev) => ({
@@ -52,20 +59,15 @@ export default function Book() {
             }
         };
         const stopDragging = () => setIsDragging(false);
+
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseup", stopDragging);
+
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", stopDragging);
         };
-    }, [isDragging]);
-
-    async function fetchNotes() {
-        const res = await axios.get("/api/notes")
-        const notes = res.data.content
-        setNotes(notes)
-    }
-
+    }, [isDragging, fetchNotes]);
 
 
     return (
@@ -89,7 +91,7 @@ export default function Book() {
                     </span>
                 </div>
             ) : (
-                <div className="ml-[270px] mt-10 w-196 h-120 bg-gradient-to-br from-neutral-900 to-black rounded-xl shadow-xl flex flex-col overflow-hidden border border-neutral-700"
+                <div className="mt-10 w-196 h-120 bg-gradient-to-br from-neutral-900 to-black rounded-xl shadow-xl flex flex-col overflow-hidden border border-neutral-700"
                     onContextMenu={e => e.preventDefault()}
                     onMouseDown={e => {
                         if (e.button === 2) setIsDragging(true);

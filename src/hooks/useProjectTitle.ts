@@ -12,8 +12,12 @@ export function useProjectTitle() {
         if (!res.ok) throw new Error("Error al cargar título");
         const data = await res.json();
         setTitle(data.projectTitle || "");
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e: unknown) {
+      if(e instanceof Error)
+      setError(e.message);
+    else{
+      setError("unkown error")
+    }
       } finally {
         setLoading(false);
       }
@@ -30,8 +34,12 @@ export function useProjectTitle() {
         body: JSON.stringify({ projectTitle: newTitle }),
       });
       if (!res.ok) throw new Error("Error al guardar título");
-    } catch (e: any) {
+    } catch (e: unknown) {
+      if(e instanceof Error)
       setError(e.message);
+    else{
+      setError("unkown error")
+    }
     }
   }
 

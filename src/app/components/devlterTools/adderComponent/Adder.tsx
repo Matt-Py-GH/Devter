@@ -24,23 +24,21 @@ interface AdderProps {
 }
 
 export default function Adder({ location, api, onItemAdded }: AdderProps) {
-
     const [items, setItems] = useState<Item[]>([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetching() {
             setLoading(true);
-            setError(null);
+            console.log("error");
             try {
                 const res = await axios.get(`${api}`);
                 setItems(res.data);
-            } catch (error: any) {
+            } catch (error) {
                 console.error("Error al cargar Error list:", error);
-                setError(error.response?.data?.message || error.message);
+                console.log(error);
             }
             finally {
                 setLoading(false);
@@ -48,12 +46,12 @@ export default function Adder({ location, api, onItemAdded }: AdderProps) {
         }
 
         fetching();
-    }, []);
+    }, [api]);
 
     const addItem = async () => {
         if (!title.trim()) return;
         setLoading(true);
-        setError(null);
+        console.log("error");
         try {
             const res = await axios.post(`${api}`, { title, description });
             const newItem = res.data;
@@ -61,8 +59,8 @@ export default function Adder({ location, api, onItemAdded }: AdderProps) {
             setItems([newItem, ...items]);
             setTitle("");
             setDescription("");
-        } catch (e: any) {
-            setError(e.response?.data?.message || e.message);
+        } catch (e: unknown) {
+            console.log(e);
         } finally {
             setLoading(false);
         }

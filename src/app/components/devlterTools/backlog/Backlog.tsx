@@ -18,7 +18,7 @@ export default function Backlog() {
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<Error | null | string>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
     const [openAdder, setOpenAdder] = useState(false)
@@ -34,8 +34,11 @@ export default function Backlog() {
                 if (!res.ok) throw new Error("Error al cargar backlog");
                 const data = await res.json();
                 setItems(data);
-            } catch (e: any) {
-                setError(e.message);
+            } catch (e: unknown) {
+                if (e instanceof Error) {
+                    setError(e)
+
+                } else { setError("unknwon error") }
             } finally {
                 setLoading(false);
             }
@@ -55,8 +58,10 @@ export default function Backlog() {
                 prev.map(item => (item._id === newItem._id ? newItem : item))
             );
 
-        } catch (error: any) {
-            setError(error.response?.data?.message || error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else { setError("UnkwonError") }
         }
         finally {
             setLoading(false)
@@ -71,8 +76,12 @@ export default function Backlog() {
             const res = await axios.delete("/api/backlog", { data: { id: itemId } });
             console.log("Delete response:", res.data);
             setItems(items.filter(item => item._id !== itemId));
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error)
+                setError(e);
+            else {
+                setError("unknown error")
+            }
         }
         finally {
             setLoading(false);
@@ -111,7 +120,7 @@ export default function Backlog() {
 
                 {/* Mensajes de estado */}
                 {loading && <p className="text-center text-sm text-neutral-400">Cargando...</p>}
-                {error && <p className="text-center text-sm text-red-500">{error}</p>}
+                {error && <p className="text-center text-sm text-red-500">{typeof error === "string" ? error : error.message}</p>}
 
                 {/* Búsqueda y filtro */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4">

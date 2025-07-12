@@ -18,7 +18,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <Header children={`Hello, ${userName}`} />
+            <Header>{`Hello, ${userName}`}</Header>
             <Backlog />
             <PaintWindow />
             <ErrorLog />

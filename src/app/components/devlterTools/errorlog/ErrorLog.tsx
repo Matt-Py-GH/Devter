@@ -15,14 +15,10 @@ export default function ErrorLog() {
     const [adderOpen, setAdderOpen] = useState(false)
     const [open, setOpen] = useState(false)
     const [bugs, setBugs] = useState<Bug[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
 
     const updateBug = async (updatedBug: Bug) => {
-        setLoading(true);
-        setError(null);
         try {
             const res = await axios.patch("/api/bugs", updatedBug)
             const newBug = res.data;
@@ -31,27 +27,22 @@ export default function ErrorLog() {
                 prev.map(bug => (bug._id === newBug._id ? newBug : bug))
             );
 
-        } catch (error: any) {
-            setError(error.response?.data?.message || error.message);
-        }
-        finally {
-            setLoading(false)
+        } catch (error: unknown) {
+            console.log(error)
         }
     }
 
     const deleteBug = async (bugId: string) => {
         console.log("Deleting bug with ID:", bugId);
-        setLoading(true);
-        setError(null);
         try {
             const res = await axios.delete("/api/bugs", { data: { id: bugId } });
             console.log("Delete response:", res.data);
             setBugs(bugs.filter(bug => bug._id !== bugId));
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            console.log(e);
         }
         finally {
-            setLoading(false);
+            ;
         }
     }
 
@@ -64,17 +55,17 @@ export default function ErrorLog() {
         const storedFilter = localStorage.getItem("bugsStatusFilter");
         setStatusFilter(storedFilter || "")
         async function fetchBugs() {
-            setLoading(true);
-            setError(null);
+
+
             try {
                 const res = await fetch("/api/bugs");
                 if (!res.ok) throw new Error("Error al cargar bugs");
                 const data = await res.json();
                 setBugs(data);
-            } catch (e: any) {
-                setError(e.message);
+            } catch (e: unknown) {
+                console.log(e);
             } finally {
-                setLoading(false);
+                ;
             }
         }
 

@@ -19,8 +19,12 @@ export default function RegisterForm() {
         try {
             await axios.post("/api/auth/signup", { username, password, email });
             router.push("/login");
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Error al registrar");
+        } catch (e: unknown) {
+            if (e instanceof Error)
+                setError(e.message);
+            else {
+                setError("unkown error")
+            }
         }
     };
 

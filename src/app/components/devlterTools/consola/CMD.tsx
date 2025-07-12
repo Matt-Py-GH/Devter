@@ -16,7 +16,6 @@ export default function Console() {
     const [showAdder, setShowAdder] = useState(false);
     const [command, setCommand] = useState("");
     const [commands, setCommands] = useState<Command[]>([]);
-    const [error, setError] = useState("");
     const [copiedId, setCopiedId] = useState<number | null>(null);
 
 
@@ -30,16 +29,15 @@ export default function Console() {
             const data = res.data
             setCommands(data)
             console.log(data)
-        } catch (err: any) {
-            setError(err)
+        } catch (err: unknown) {
+            console.log(err)
         }
     }
 
     const addCommand = async (commandText: string) => {
         try {
-            const comando = await axios.post("/api/command", { command: commandText })
-            const newCommand = comando.data
-        } catch (error: any) {
+            await axios.post("/api/command", { command: commandText })
+        } catch (error: unknown) {
             console.log(error)
         } finally {
             setTimeout(() => {
@@ -53,9 +51,8 @@ export default function Console() {
             await axios.delete("/api/command", { data: { id: commandID } })
             fetchCommands()
         }
-        catch (error: any) {
+        catch (error: unknown) {
             console.log(error);
-            setError(error)
         }
     }
 
