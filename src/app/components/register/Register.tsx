@@ -27,7 +27,7 @@ export default function RegisterForm() {
         try {
             await axios.post("/api/auth/signup", { username, password, email });
             router.push("/login");
-        } catch (e: any) {
+        } catch (e: unknown) {
             if (axios.isAxiosError(e) && e.response?.data?.message) {
                 setError(e.response.data.message);
             } else {
@@ -77,8 +77,8 @@ export default function RegisterForm() {
                         type="submit"
                         disabled={loading}
                         className={`py-2 rounded transition-colors ${loading
-                                ? "bg-neutral-500 text-white cursor-not-allowed"
-                                : "bg-white text-black hover:bg-violet-200 cursor-pointer"
+                            ? "bg-neutral-500 text-white cursor-not-allowed"
+                            : "bg-white text-black hover:bg-violet-200 cursor-pointer"
                             }`}
                     >
                         {loading ? "Registrando..." : "Registrarse"}
