@@ -10,7 +10,7 @@ type CustomUser = {
   username: string;
 };
 
-const error = "Invalid credentials";
+const INVALID_CREDENTIALS = "Invalid credentials";
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -18,17 +18,21 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials): Promise<{ id: string; username: string; email: string } | null> {
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error(INVALID_CREDENTIALS);
+        }
+
         await connectDB();
-        const user = await User.findOne({ email: credentials?.email }).select("+password");
 
-        if (!user) throw new Error(error);
+        const user = await User.findOne({ email: credentials.email }).select("+password");
+        if (!user) throw new Error(INVALID_CREDENTIALS);
 
-        const isValid = await bcrypt.compare(credentials!.password, user.password);
-        if (!isValid) throw new Error(error);
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) throw new Error(INVALID_CREDENTIALS);
 
         return {
           id: user._id.toString(),
@@ -40,12 +44,12 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user){
+      if (user) {
         token.user = {
-        id: user.id || "",
-        name: (user as CustomUser).username,
-        email: user.email || "unknownemail"
-      };
+          id: user.id || "",
+          name: (user as CustomUser).username,
+          email: user.email || "unknownemail",
+        };
       }
       return token;
     },

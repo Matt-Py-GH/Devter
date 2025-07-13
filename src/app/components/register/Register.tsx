@@ -11,26 +11,34 @@ export default function RegisterForm() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
 
+        if (!username || !email || !password) {
+            setError("Todos los campos son obligatorios");
+            return;
+        }
+
+        setLoading(true);
+
         try {
             await axios.post("/api/auth/signup", { username, password, email });
             router.push("/login");
-        } catch (e: unknown) {
-            if (e instanceof Error)
-                setError(e.message);
-            else {
-                setError("unkown error")
+        } catch (e: any) {
+            if (axios.isAxiosError(e) && e.response?.data?.message) {
+                setError(e.response.data.message);
+            } else {
+                setError("Error desconocido al registrar");
             }
+            setLoading(false);
         }
     };
 
     return (
         <>
-
             <h1 className="text-6xl text-center mt-4">Devter</h1>
             <div className="mt-30 flex items-center justify-center">
                 <form
@@ -67,10 +75,15 @@ export default function RegisterForm() {
 
                     <button
                         type="submit"
-                        className="bg-white text-black py-2 rounded hover:bg-violet-200 transition-colors hover:cursor-pointer"
+                        disabled={loading}
+                        className={`py-2 rounded transition-colors ${loading
+                                ? "bg-neutral-500 text-white cursor-not-allowed"
+                                : "bg-white text-black hover:bg-violet-200 cursor-pointer"
+                            }`}
                     >
-                        Registrarse
+                        {loading ? "Registrando..." : "Registrarse"}
                     </button>
+
                     <p className="text-white text-sm text-center mt-2">
                         ¿Ya tienes una cuenta?{" "}
                         <Link href="/login" className="text-blue-500 hover:underline">
@@ -79,5 +92,6 @@ export default function RegisterForm() {
                     </p>
                 </form>
             </div>
-        </>);
+        </>
+    );
 }

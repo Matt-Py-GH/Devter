@@ -1,46 +1,65 @@
 import { NextResponse } from "next/server";
-import User from "@/models/user";
 import bcrypt from "bcryptjs";
+import User from "@/models/user";
 import { connectDB } from "@/libs/mongodb";
 
-export async function POST(req:Request){
-    console.log("peticion de register recibida");
-    const {username, password, email} = await req.json()
-    
-    if(!username || !email || !password) return NextResponse.json({message:"Invalid fields"}, {status:400})
-    
-    if (username.length < 3) {
-        return NextResponse.json({message:"Username too short"}, {status:400})
+function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidUsername(username: string) {
+  return /^[a-zA-Z0-9]+$/.test(username) && username.length >= 3;
+}
+
+export async function POST(req: Request) {
+  try {
+    const { username, password, email } = await req.json();
+
+    if (!username || !email || !password) {
+      return NextResponse.json({ message: "All fields are required" }, { status: 400 });
+    }
+
+    if (!isValidUsername(username)) {
+      return NextResponse.json({ message: "Invalid or too short username" }, { status: 400 });
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json({ message: "Invalid email format" }, { status: 400 });
     }
 
     if (password.length < 8) {
-        return NextResponse.json({message:"Password too short"}, {status:400})
-    }
-    if (!/^[a-zA-Z0-9]+$/.test(username)) {
-        return NextResponse.json({message:"Invalid username"}, {status:400})
+      return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
     }
 
-    try{
-        await connectDB();
-        const userFound = await User.findOne({email});
-    
-        if(userFound) return NextResponse.json({message:"Already exists an account with this email"}, {status:400});
-    
-        const hashedPassword = await bcrypt.hash(password, 12);
-    
-        const user = new User({
-            username,
-            password:hashedPassword,
-            email
-        });
-        const savedUser = await user.save();
-        console.log("peticion de register terminada");
-        console.log(savedUser);
-        return NextResponse.json(savedUser);
+    await connectDB();
 
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return NextResponse.json({ message: "Email is already in use" }, { status: 400 });
     }
-    catch(err){
-        console.log(err);
-        return NextResponse.error();
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return NextResponse.json({ message: "Username is already taken" }, { status: 400 });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+
+    const savedUser = await newUser.save();
+
+    return NextResponse.json({
+      id: savedUser._id,
+      username: savedUser.username,
+      email: savedUser.email
+    });
+  } catch (error) {
+    console.error("Error in register:", error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+  }
 }

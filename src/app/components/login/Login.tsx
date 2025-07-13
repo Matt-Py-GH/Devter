@@ -8,12 +8,20 @@ import Link from "next/link";
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError("");
+
+        if (!email || !password) {
+            setError("Todos los campos son obligatorios");
+            return;
+        }
+
+        setLoading(true);
 
         const res = await signIn("credentials", {
             email,
@@ -22,7 +30,12 @@ export default function LoginForm() {
         });
 
         if (res?.error) {
-            setError("Credenciales inválidas");
+            if (res.error === "Invalid credentials") {
+                setError("Email o contraseña incorrectos");
+            } else {
+                setError("Ocurrió un error al iniciar sesión");
+            }
+            setLoading(false);
         } else {
             router.push("/dashboard");
         }
@@ -60,10 +73,15 @@ export default function LoginForm() {
 
                     <button
                         type="submit"
-                        className="w-full bg-white text-black py-2 rounded hover:bg-violet-200 transition-colors cursor-pointer"
+                        disabled={loading}
+                        className={`w-full py-2 rounded transition-colors ${loading
+                                ? "bg-neutral-500 text-white cursor-not-allowed"
+                                : "bg-white text-black hover:bg-violet-200 cursor-pointer"
+                            }`}
                     >
-                        Ingresar
+                        {loading ? "Ingresando..." : "Ingresar"}
                     </button>
+
                     <p className="text-white text-sm text-center mt-2">
                         ¿No tienes una cuenta?{" "}
                         <Link href="/register" className="text-blue-500 hover:underline">
@@ -72,5 +90,6 @@ export default function LoginForm() {
                     </p>
                 </form>
             </div>
-        </>);
+        </>
+    );
 }
