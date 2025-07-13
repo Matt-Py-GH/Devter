@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 import SecondaryDashboard from "../clientPages/Secondary";
 
 export const generateMetadata = (): Metadata => ({
-    title: "Dashboard Secundario | Devter",
-    description: "Dashboard secundario para usuarios autenticados.",
+    title: "Devter",
+    description: "Dashboard secundario de Devter.",
     robots: {
         index: false,
         follow: false,

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import DashboardClient from "../clientPages/Dashboard";
 
 export const generateMetadata = (): Metadata => ({
-    title: "Dashboard | Devter",
+    title: "Devter",
     description: "Tu espacio personal de desarrollo en Devter.",
     robots: {
         index: false,

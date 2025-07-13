@@ -12,6 +12,11 @@ export const generateMetadata = (): Metadata => ({
     alternates: {
         canonical: "https://devter.dev/login",
     },
+    robots: {
+        index: true,
+        follow: true,
+    },
+
 });
 
 
