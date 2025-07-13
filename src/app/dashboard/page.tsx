@@ -1,30 +1,26 @@
-"use client";
+// src/app/dashboard/page.tsx  (server component)
 
-//React & Next imports
-import { useSession } from "next-auth/react";
+import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/libs/authOptions";
+import { redirect } from "next/navigation";
+import DashboardClient from "../clientPages/Dashboard";
 
-//Components
-import Header from "../components/header/Header";
-import Backlog from "../components/devterTools/backlog/Backlog";
-import PaintWindow from "../components/devterTools/pizarra/Pizarra";
-import ErrorLog from "../components/devterTools/errorlog/ErrorLog";
-import CMD from "../components/devterTools/consola/CMD"
-import Book from "../components/devterTools/book/Book";
+export const generateMetadata = (): Metadata => ({
+    title: "Dashboard | Devter",
+    description: "Tu espacio personal de desarrollo en Devter.",
+    robots: {
+        index: false,
+        follow: false,
+    },
+})
 
-export default function Dashboard() {
-    const { data: session } = useSession();
-    const user = session?.user;
-    const userName = user?.name || "there!";
+export default async function DashboardPage() {
+    const session = await getServerSession(authOptions);
 
-    return (
-        <>
-            <Header>{`Hello, ${userName}`}</Header>
-            <Backlog />
-            <PaintWindow />
-            <ErrorLog />
-            <CMD />
-            <Book />
+    if (!session) {
+        redirect("/login");
+    }
 
-        </>
-    )
+    return <DashboardClient userName={session.user.name || "there!"} />;
 }

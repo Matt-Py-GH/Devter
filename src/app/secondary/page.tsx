@@ -1,20 +1,25 @@
-//Client component
-"use client";
+// src/app/secondary-dashboard/page.tsx
+import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/libs/authOptions";
+import { redirect } from "next/navigation";
+import SecondaryDashboard from "../clientPages/Secondary";
 
-//React & Next imports
-import { useSession } from "next-auth/react";
-//Components
-import Header from "../components/header/Header";
+export const generateMetadata = (): Metadata => ({
+    title: "Dashboard Secundario | Devter",
+    description: "Dashboard secundario para usuarios autenticados.",
+    robots: {
+        index: false,
+        follow: false,
+    },
+});
 
-export default function Dashboard() {
-    const { data: session } = useSession();
-    const user = session?.user;
-    const userName = user?.name || "there!";
+export default async function Secondary() {
+    const session = await getServerSession(authOptions);
 
+    if (!session) {
+        redirect("/login");
+    }
 
-    return (
-        <>
-            <Header>{`Hello, ${userName}`}</Header>
-        </>
-    )
+    return <SecondaryDashboard userName={session.user.name || "there!"} />;
 }
