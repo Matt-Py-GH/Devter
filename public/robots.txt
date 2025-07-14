@@ -1,6 +1,6 @@
 User-agent: *
 Disallow: /dashboard
 Disallow: /profile
-Disallow: /secondary-dashboard
+Disallow: /secondary
 
 Sitemap: https://devter.dev/sitemap.xml
