@@ -4,7 +4,7 @@ import { authOptions } from "@/libs/authOptions";
 import { redirect } from "next/navigation";
 
 export const generateMetadata = (): Metadata => ({
-    title: "Devter - Your developer shelter",
+    title: "Devter",
     description: "Organiza tus proyectos, código y notas con Devter.",
     robots: {
         index: false,
