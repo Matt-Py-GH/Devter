@@ -1,4 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+// Metadata para evitar indexación de páginas 404
+export const metadata = (): Metadata => ({
+    title: "Not found | Devter",
+    description: "La página que estás buscando no existe.",
+    robots: {
+        index: false,
+        follow: false,
+    },
+});
 
 export default function NotFound() {
     return (
