@@ -79,9 +79,6 @@ export default function Book() {
                 <div className="relative group">
                     <div
                         onContextMenu={e => e.preventDefault()}
-                        onMouseDown={e => {
-                            if (e.button === 2) setIsDragging(true);
-                        }}
                         onClick={() => setIsMinimized(false)}
                         className="bg-neutral-800 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow-lg border border-white hover:bg-neutral-700 transition">
                         <Notebook size={16} />
@@ -94,7 +91,7 @@ export default function Book() {
                 <div className="mt-10 w-196 h-120 bg-gradient-to-br from-neutral-900 to-black rounded-xl shadow-xl flex flex-col overflow-hidden border border-neutral-700"
                     onContextMenu={e => e.preventDefault()}
                     onMouseDown={e => {
-                        if (e.button === 2) setIsDragging(true);
+                        if (e.button === 0) setIsDragging(true);
                     }}>
                     {/* Botones de acción */}
                     <div className="flex justify-end gap-2 p-2">

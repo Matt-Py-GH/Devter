@@ -102,9 +102,6 @@ export default function PaintWindow() {
                 <div className="relative group">
                     <div
                         onContextMenu={(e) => e.preventDefault()}
-                        onMouseDown={(e) => {
-                            if (e.button === 2) setIsDragging(true);
-                        }}
                         onClick={() => setIsMinimized(false)}
                         className="bg-neutral-800 text-white text-xs px-3 py-1 rounded-full cursor-pointer shadow-lg border border-white hover:bg-neutral-700 transition">
                         <Brush size={16} />
@@ -119,7 +116,7 @@ export default function PaintWindow() {
                         className="flex justify-between items-center bg-white text-black text-sm px-3 py-1 cursor-move rounded-t-lg select-none"
                         onContextMenu={(e) => e.preventDefault()}
                         onMouseDown={(e) => {
-                            if (e.button === 2) setIsDragging(true);
+                            if (e.button === 0) setIsDragging(true);
                         }}
                     >
                         <Brush size={16} /> Paint
@@ -130,7 +127,10 @@ export default function PaintWindow() {
                             >
                                 <Trash2 size={14} />
                             </button>
-                            <button onClick={() => setIsMinimized(true)}>
+                            <button onClick={() => {
+                                setPos({ x: 330, y: 80 })
+                                setIsMinimized(true)
+                            }}>
                                 <Minus size={16} />
                             </button>
                         </div>

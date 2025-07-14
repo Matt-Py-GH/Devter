@@ -16,7 +16,7 @@ interface Props {
 export default function DashboardClient({ userName }: Props) {
     return (
         <>
-            <Header>{`Hello, ${userName}`}</Header>
+            <Header>{`${userName}`}</Header>
             <Backlog />
             <PaintWindow />
             <ErrorLog />
