@@ -94,7 +94,7 @@ export default function Backlog() {
     );
 
     return (
-        <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto max-h-[80vh] flex flex-col mt-4 transition-all">
+        <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto max-h-[80vh] flex flex-col transition-all">
             <div
                 onClick={() => setOpen(!open)}
                 className="flex justify-between items-center px-4 py-3 cursor-pointer select-none border-neutral-700">
@@ -105,8 +105,7 @@ export default function Backlog() {
 
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out 
-    ${open ? "max-h-[80vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"} flex flex-col flex-grow space-y-4`}
-            >
+    ${open ? "max-h-[80vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"} flex flex-col flex-grow space-y-4`}>
 
                 {/* Botón + / Cancelar para mostrar el ItemAdder */}
                 <div className="flex justify-end">

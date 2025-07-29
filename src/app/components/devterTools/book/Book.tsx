@@ -16,7 +16,7 @@ export default function Book() {
         const res = await axios.get("/api/notes");
         const notes = res.data.content;
         setNotes(notes);
-    }, []);
+    }, [notes]);
 
     const handleSave = useCallback(async () => {
         try {

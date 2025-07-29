@@ -55,13 +55,9 @@ export default function ErrorLog() {
         const storedFilter = localStorage.getItem("bugsStatusFilter");
         setStatusFilter(storedFilter || "")
         async function fetchBugs() {
-
-
             try {
-                const res = await fetch("/api/bugs");
-                if (!res.ok) throw new Error("Error al cargar bugs");
-                const data = await res.json();
-                setBugs(data);
+                const res = await axios.get("/api/bugs");
+                setBugs(res.data);
             } catch (e: unknown) {
                 console.log(e);
             } finally {
@@ -70,7 +66,7 @@ export default function ErrorLog() {
         }
 
         fetchBugs();
-    }, []);
+    }, [setBugs]);
 
     const toggleTop = '80px'
     const panelTop = '120px'
@@ -84,7 +80,7 @@ export default function ErrorLog() {
                     setAdderOpen(false)
                     setAddButton("+")
                 }}
-                className="fixed left-0 z-40 flex items-center gap-2 bg-neutral-900 text-white px-3 py-2 rounded-r-2xl shadow-md cursor-pointer select-none border border-white/10 transition-all"
+                className="flex items-center gap-2 bg-neutral-900 text-white px-3 py-2 rounded-r-2xl shadow-md cursor-pointer select-none border border-white/10 transition-all w-[120px]"
                 style={{ top: toggleTop }}>
 
                 <span className="font-mono text-sm">Errors</span>
@@ -93,7 +89,7 @@ export default function ErrorLog() {
 
             {/* Panel deslizable */}
             <div
-                className={`fixed left-0 w-98 bg-neutral-900 text-white shadow-2xl z-30 transition-transform duration-300 ease-in-out rounded-r-2xl border-r border-white/10 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+                className={`w-98 bg-neutral-900 text-white shadow-2xl z-30 transition-transform duration-300 ease-in-out rounded-r-2xl border-r border-white/10 ${open ? 'translate-x-0' : '-translate-x-full'}`}
                 style={{ top: panelTop, height: `calc(100vh - ${panelTop})` }}>
                 {adderOpen ? <Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} /> : null}
 
