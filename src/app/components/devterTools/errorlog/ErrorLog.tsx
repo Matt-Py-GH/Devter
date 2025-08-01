@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import axios from 'axios';
 
@@ -13,7 +12,6 @@ import BugCard from '../cardComponent/CardComponent';
 export default function ErrorLog() {
     const [addButton, setAddButton] = useState("+")
     const [adderOpen, setAdderOpen] = useState(false)
-    const [open, setOpen] = useState(false)
     const [bugs, setBugs] = useState<Bug[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
@@ -68,29 +66,12 @@ export default function ErrorLog() {
         fetchBugs();
     }, [setBugs]);
 
-    const toggleTop = '80px'
-    const panelTop = '120px'
-
     return (
         <>
-            {/* Toggle lateral */}
-            <div
-                onClick={() => {
-                    setOpen(!open)
-                    setAdderOpen(false)
-                    setAddButton("+")
-                }}
-                className="flex items-center gap-2 bg-neutral-900 text-white px-3 py-2 rounded-r-2xl shadow-md cursor-pointer select-none border border-white/10 transition-all w-[120px]"
-                style={{ top: toggleTop }}>
-
-                <span className="font-mono text-sm">Errors</span>
-                {open ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
-            </div>
 
             {/* Panel deslizable */}
             <div
-                className={`w-98 bg-neutral-900 text-white shadow-2xl z-30 transition-transform duration-300 ease-in-out rounded-r-2xl border-r border-white/10 ${open ? 'translate-x-0' : '-translate-x-full'}`}
-                style={{ top: panelTop, height: `calc(100vh - ${panelTop})` }}>
+                className={`bg-neutral-900 text-white shadow-2xl transition-transform duration-300 ease-in-out rounded-2xl border-r border-white/10 p-6`}>
                 {adderOpen ? <Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} /> : null}
 
                 <div className="relative flex flex-col h-full">
@@ -124,8 +105,7 @@ export default function ErrorLog() {
                                 setStatusFilter(e.target.value);
                                 localStorage.setItem("bugsStatusFilter", e.target.value);
                             }}
-                            className="w-full sm:w-auto bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm text-white"
-                        >
+                            className="w-full sm:w-auto bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm text-white">
                             <option value="">Todos</option>
                             <option value="bug">🔴 Bug</option>
                             <option value="fixing">🟡 Fixing</option>

@@ -8,14 +8,12 @@ import { Item } from "../adderComponent/Adder";
 
 //React & lucide
 import { useState, useEffect } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 //Axios for more pleasure
 import axios from "axios";
 
 
 export default function Backlog() {
-    const [open, setOpen] = useState(false);
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<Error | null | string>(null);
@@ -94,25 +92,16 @@ export default function Backlog() {
     );
 
     return (
-        <div className="bg-neutral-900 text-white rounded-2xl shadow-md w-full max-w-xl mx-auto max-h-[80vh] flex flex-col transition-all">
-            <div
-                onClick={() => setOpen(!open)}
-                className="flex justify-between items-center px-4 py-3 cursor-pointer select-none border-neutral-700">
-
-                <span className="text-lg font-mono">Backlog</span>
-                {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </div>
+        <div className="bg-neutral-900 text-white p-6 rounded-2xl shadow-md w-full mx-auto max-h-[80vh] flex flex-col transition-all">
 
             <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out 
-    ${open ? "max-h-[80vh] opacity-100 p-4" : "max-h-0 opacity-0 p-0"} flex flex-col flex-grow space-y-4`}>
+                className={`overflow-hidden transition-all duration-300 ease-in-out flex flex-col flex-grow space-y-4`}>
 
                 {/* Botón + / Cancelar para mostrar el ItemAdder */}
                 <div className="flex justify-end">
                     <button
                         onClick={() => setOpenAdder(!openAdder)}
-                        className="bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-sm transition"
-                    >
+                        className="bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-sm transition">
                         {openAdder ? "x" : "+"}
                     </button>
                 </div>

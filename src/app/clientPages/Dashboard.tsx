@@ -4,49 +4,80 @@
 
 import Header from "../components/header/Header";
 import Backlog from "../components/devterTools/backlog/Backlog";
-import PaintWindow from "../components/devterTools/pizarra/Pizarra";
+import Paint from "../components/devterTools/pizarra/Pizarra";
 import ErrorLog from "../components/devterTools/errorlog/ErrorLog";
 import CMD from "../components/devterTools/consola/CMD";
 import Book from "../components/devterTools/book/Book";
 import Snippet from "../components/devterTools/snippet/Snippet";
+import { useState } from "react";
 
-interface Props {
-    userName: string;
-}
+//Lucide imports
+import { Notebook, LogsIcon, Terminal } from "lucide-react";
 
-export default function DashboardClient({ userName }: Props) {
+export default function DashboardClient() {
+
+    const toolStyle = "m-4"
+    const buttonStyle =
+        "cursor-pointer w-8 h-8 transition-transform duration-200 ease-in-out hover:-translate-y-1";
+    const iconSize = 32
+
+    const [errorLog, setErrorLog] = useState(false)
+    const [backlog, setBacklog] = useState(false)
+    const [paint, setPaint] = useState(false)
+    const [notebook, setNotebook] = useState(false)
+    const [snip, setSnip] = useState(false)
+    const [terminal, setTerminal] = useState(false)
+
     return (
         <>
-            <Header>{`${userName}`}</Header>
-            <main className="flex flex-col w-full h-screen px-4 py-2 gap-4">
-                {/* Fila principal */}
-                <div className="flex flex-row justify-between items-start w-full gap-4">
-                    {/* Izquierda: ErrorLog */}
-                    <div className="flex-none">
-                        <ErrorLog />
+            <Header />
+            <main className="flex flex-col">
+                <section className="">
+                    <div className={toolStyle}>
+                        {!backlog && <Backlog />}
                     </div>
 
-                    {/* Centro-izquierda: PaintWindow + Book */}
-                    <div className="flex flex-row items-start gap-2 flex-none">
-                        <PaintWindow />
-                        <Book />
+                    <div className={toolStyle}>
+                        {errorLog && <ErrorLog />}
                     </div>
 
-                    {/* Centro: Backlog */}
-                    <div className="flex-grow flex justify-center">
-                        <Backlog />
+                    <div className={toolStyle}>
+                        {paint && <Paint />}
                     </div>
 
-                    {/* Derecha: Snippet */}
-                    <div className="flex-none">
-                        <Snippet />
+                    <div className={toolStyle}>
+                        {snip && <Snippet />}
                     </div>
-                </div>
 
-                {/* Consola abajo centrada */}
-                <div className="flex justify-center mt-auto">
-                    <CMD />
-                </div>
+                    <div className={toolStyle}>
+                        {notebook && <Book />}
+                    </div>
+
+                    <div className={toolStyle}>
+                        {terminal && <CMD />}
+                    </div>
+                </section>
+
+                <section className="flex gap-20 ml-100 bottom-3 items-center">
+                    <button className={buttonStyle}
+                        onClick={() => setNotebook(!notebook)}>
+                        <Notebook size={iconSize} />
+                    </button>
+
+                    <button className={buttonStyle}
+                        onClick={() => setBacklog(!backlog)}>
+                        <LogsIcon size={iconSize} />
+                    </button>
+
+                    <button className={buttonStyle}
+                        onClick={() => setTerminal(!terminal)}>
+                        <Terminal size={iconSize} />
+                    </button>
+
+                    <button className={buttonStyle}></button>
+                    <button className={buttonStyle}></button>
+                    <button className={buttonStyle}></button>
+                </section>
             </main>
         </>
     );

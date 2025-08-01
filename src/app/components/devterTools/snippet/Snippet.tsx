@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SnippetModal from "./SnippetModal";
+// import SnippetModal from "./SnippetModal";
 import axios from "axios";
 
 

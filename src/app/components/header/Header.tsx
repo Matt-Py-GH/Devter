@@ -1,6 +1,5 @@
 "use client";
 
-import { HTMLAttributes } from "react";
 import ProfileButton from "../profile-button/ProfileButton";
 import { useProjectTitle } from "@/hooks/useProjectTitle";
 import { useState, useEffect } from "react";
@@ -9,11 +8,7 @@ import { useRouter } from "next/navigation";
 
 import AltDashboard from "../alternate-dashboard/AltDashboard";
 
-interface HeaderProps extends HTMLAttributes<HTMLElement> {
-    children: React.ReactNode;
-}
-
-export default function Header({ children, ...rest }: HeaderProps) {
+export default function Header() {
     const { title, setTitle, loading } = useProjectTitle();
     const router = useRouter();
 
@@ -31,15 +26,12 @@ export default function Header({ children, ...rest }: HeaderProps) {
         router.push(next === "main" ? "/" : "/secondary");
     };
 
-
-
     const headerClass = "text-white flex items-center justify-between px-4 py-2 h-16 text-xl";
 
-    const inputClass = "text-white px-3 hover:bg-neutral-900 py-1 ml-22 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-400 w-full max-w-xs text-4xl mt-4 text-center"
+    const inputClass = "text-white px-3 hover:bg-neutral-900 py-1 ml-5 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-400 w-full max-w-xs text-4xl mt-4"
 
     return (
-        <header {...rest} className={headerClass}>
-            {children}
+        <header className={headerClass}>
             <input
                 type="text"
                 value={title}
