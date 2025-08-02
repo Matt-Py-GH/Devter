@@ -43,7 +43,7 @@ export default function RegisterForm() {
             <div className="mt-30 flex items-center justify-center">
                 <form
                     onSubmit={handleSubmit}
-                    className="border border-white max-w-md mt-0 p-6 shadow-md rounded flex flex-col gap-4 bg-neutral-900 rounded-2xl"
+                    className="border border-white max-w-md mt-0 p-6 shadow-md flex flex-col gap-4 bg-neutral-900 rounded-2xl"
                 >
                     <h1 className="text-white text-2xl font-semibold text-center">Registro</h1>
 
