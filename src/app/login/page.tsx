@@ -15,7 +15,7 @@ export const generateMetadata = (): Metadata => ({
     robots: {
         index: true,
         follow: true,
-        nocache: false, // Opcional, explícito
+        nocache: false,
         googleBot: {
             index: true,
             follow: true,
@@ -41,7 +41,7 @@ export const generateMetadata = (): Metadata => ({
         title: "Iniciar sesión | Devter",
         description: "Inicia sesión en Devter para acceder a tus herramientas de desarrollo.",
         images: ["https://devter.dev/og-login.png"],
-        creator: "@tu_usuario", // opcional si tenés cuenta X/Twitter
+        creator: "@_Mateo_Delgado",
     },
 });
 
