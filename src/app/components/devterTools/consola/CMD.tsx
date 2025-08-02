@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Trash2, Copy, CopyCheck, ChevronsUp, ChevronsDown, Plus, X } from "lucide-react";
-
+import { Trash2, Copy, CopyCheck, Plus, X } from "lucide-react";
 
 import axios from "axios";
 
@@ -12,7 +11,6 @@ type Command = {
 }
 
 export default function Console() {
-    const [open, setOpen] = useState(false);
     const [showAdder, setShowAdder] = useState(false);
     const [command, setCommand] = useState("");
     const [commands, setCommands] = useState<Command[]>([]);
@@ -60,29 +58,20 @@ export default function Console() {
         <>
             {/* Consola deslizable */}
             <div
-                className={`fixed bottom-0 w-[576px] h-[320px] bg-black text-white border-t border-neutral-700 z-30 transition-transform duration-300 ease-in-out font-mono rounded-t-2xl shadow-xl ${open ? "translate-y-0" : "translate-y-full"}`}
-            >
-                {/* Botón para mostrar/ocultar consola */}
-                <div
-                    onClick={() => setOpen(!open)}
-                    className={`absolute -top-[32px] left-1/2 -translate-x-1/2 z-40 cursor-pointer transition-all duration-300 ${open ? "h-6" : "h-8"}`}>
-
-                    <div className="bg-neutral-800 text-white px-3 py-1 rounded-t-xl border border-neutral-700 shadow-md hover:bg-neutral-700 transition">
-                        {open ? <ChevronsDown size={16} /> : <ChevronsUp size={20} />}
-                    </div>
-                </div>
+                className={`bg-black text-white border-t border-neutral-700 transition-transform duration-300 ease-in-out font-mono rounded-2xl shadow-xl h-130`}>
 
                 {/* Botón + / x en la esquina superior derecha */}
-                <div className="absolute top-2 right-2 z-40 cursor-pointer">
+                <div className="cursor-pointer absolute top-5 right-5 z-10">
                     <button
                         onClick={() => setShowAdder(!showAdder)}
-                        className="hover:bg-neutral-600 text-white p-1 rounded transition cursor-pointer mr-2">
+                        className="hover:bg-neutral-600 text-white p-1 rounded-2xl transition cursor-pointer">
                         {showAdder ? <X size={16} /> : <Plus size={16} />}
                     </button>
                 </div>
 
+
                 {/* Área de comandos */}
-                <div className="p-4 text-sm overflow-y-auto h-full pb-20 scrollbar-thin scrollbar-thumb-neutral-600">
+                <div className="flex flex-col p-4 text-sm overflow-y-auto pb-20 scrollbar-thin scrollbar-thumb-neutral-600 h-140">
                     <p className="text-white">{">_"}</p>
                     {/* Comandos agregados se mostrarán acá en el futuro */}
                     <ul className="flex-grow overflow-y-auto pr-1 space-y-2">
@@ -101,9 +90,8 @@ export default function Console() {
                                             setTimeout(() => {
                                                 setCopiedId(null);
                                             }, 4000);
-                                        }}
-                                    >
-                                        {copiedId === id ? <CopyCheck size={17} /> : <Copy size={17} />}
+                                        }}>
+                                        {copiedId === id ? <CopyCheck size={16} /> : <Copy size={16} />}
                                     </button>
 
                                     <button
@@ -128,8 +116,7 @@ export default function Console() {
                             value={command}
                             onChange={(e) => setCommand(e.target.value)}
                             placeholder="Escribe un comando..."
-                            className="flex-grow px-3 py-1 rounded bg-neutral-900 border border-neutral-600 text-sm text-white"
-                        />
+                            className="flex-grow px-3 py-1 rounded bg-neutral-900 border border-neutral-600 text-sm text-white" />
                         <button
                             onClick={() => {
                                 // Luego: agregar a lista

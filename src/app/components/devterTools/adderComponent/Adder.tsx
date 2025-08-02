@@ -19,11 +19,10 @@ export type Bug = {
 
 interface AdderProps {
     api: string;
-    location: string
     onItemAdded: (item: Item | Bug) => void;
 }
 
-export default function Adder({ location, api, onItemAdded }: AdderProps) {
+export default function Adder({ api, onItemAdded }: AdderProps) {
     const [items, setItems] = useState<Item[]>([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -67,7 +66,7 @@ export default function Adder({ location, api, onItemAdded }: AdderProps) {
     };
 
     return (
-        <div className={`${location === "error" ? "fixed z-50 bg-neutral-900 border border-neutral-700 rounded-br-xl p-4 shadow-md text-sm font-mono left-0 top-96" : ""}`}>
+        <div>
             <input
                 type="text"
                 placeholder="Title"

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 
-import { Save, Check, Notebook } from "lucide-react";
+import { Save, Check } from "lucide-react";
 
 export default function Book() {
     const [notes, setNotes] = useState("")
@@ -51,7 +51,7 @@ export default function Book() {
 
 
     return (
-        <div className="bg-gradient-to-br from-neutral-900 to-black rounded-xl shadow-xl border border-neutral-700 flex flex-col">
+        <div className="bg-gradient-to-br from-neutral-900 to-black rounded-xl shadow-xl border border-neutral-700 flex flex-col h-full max-h-[600px] flex-grow">
             {/* Botones de acción */}
             <div className="flex justify-end gap-2 p-2">
                 <button
@@ -65,9 +65,10 @@ export default function Book() {
             {/* Área de texto */}
             <textarea
                 value={notes || ""}
-                onChange={e => setNotes(e.target.value)}
-                className="flex-grow w-full bg-neutral-800 text-white p-4 font-mono text-sm rounded-t-none rounded-b-xl resize-none outline-none border-t border-neutral-700 max-h-[80vh]"
+                onChange={(e) => setNotes(e.target.value)}
+                className="flex-grow w-full bg-neutral-800 text-white p-4 font-mono text-sm rounded-t-none rounded-b-xl resize-none outline-none border-t border-neutral-700"
             />
         </div>
+
     );
 }

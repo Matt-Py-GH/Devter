@@ -10,8 +10,7 @@ import BugCard from '../cardComponent/CardComponent';
 
 
 export default function ErrorLog() {
-    const [addButton, setAddButton] = useState("+")
-    const [adderOpen, setAdderOpen] = useState(false)
+    const [openAdder, setOpenAdder] = useState(false)
     const [bugs, setBugs] = useState<Bug[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("");
@@ -68,30 +67,26 @@ export default function ErrorLog() {
 
     return (
         <>
-
             {/* Panel deslizable */}
             <div
-                className={`bg-neutral-900 text-white shadow-2xl transition-transform duration-300 ease-in-out rounded-2xl border-r border-white/10 p-6`}>
-                {adderOpen ? <Adder location='error' api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} /> : null}
+                className={`bg-neutral-900 text-white shadow-2xl transition-transform duration-300 ease-in-out rounded-2xl p-6 max-h-[80vh]`}>
 
-                <div className="relative flex flex-col h-full">
+                <div className="relative flex flex-col h-[70vh]">
                     {/* Header */}
-                    <div className="p-4 border-b border-white/10 font-mono text-lg">
+                    <div className="p-4 font-mono text-lg">
                         ErrorLog
                     </div>
 
-                    {/* Botón + en esquina superior derecha */}
-                    <button
-                        type="button"
-                        className="absolute top-3 right-3 w-5 h-5 flex items-center justify-center rounded-full bg-black hover:bg-neutral-700 text-white font-bold text-lg select-none shadow-md cursor-pointer"
-                        aria-label="Agregar error"
-                        onClick={() => {
-                            setAdderOpen(!adderOpen)
-                            setAddButton(addButton === "x" ? "+" : "x")
-                        }}>
-                        {addButton}
-                    </button>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4">
+                    {/* Botón + para mostrar el ItemAdder */}
+                    <div className="flex justify-end mr-2 mb-2">
+                        <button
+                            onClick={() => setOpenAdder(!openAdder)}
+                            className="bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-sm transition cursor-pointer">
+                            {openAdder ? "x" : "+"}
+                        </button>
+                    </div>
+                    {openAdder && <Adder api='/api/bugs' onItemAdded={(newError) => setBugs(prev => [newError as Bug, ...prev])} />}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-b border-neutral-700 pb-4 mt-2">
                         <input
                             type="search"
                             placeholder="🔍 Buscar por nombre"
@@ -103,7 +98,7 @@ export default function ErrorLog() {
                             value={statusFilter}
                             onChange={e => {
                                 setStatusFilter(e.target.value);
-                                localStorage.setItem("bugsStatusFilter", e.target.value);
+                                localStorage.setItem("bugsStatusFilter", e.target.value)
                             }}
                             className="w-full sm:w-auto bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm text-white">
                             <option value="">Todos</option>
@@ -131,10 +126,9 @@ export default function ErrorLog() {
                                 />
                             ))}
                         </ul>
-
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

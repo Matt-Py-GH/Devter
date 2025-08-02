@@ -92,7 +92,7 @@ export default function Backlog() {
     );
 
     return (
-        <div className="bg-neutral-900 text-white p-6 rounded-2xl shadow-md w-full mx-auto max-h-[80vh] flex flex-col transition-all">
+        <div className="bg-neutral-900 text-white p-6 rounded-2xl shadow-md w-full mx-auto max-h-[500px] flex flex-col transition-all">
 
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out flex flex-col flex-grow space-y-4`}>
@@ -138,7 +138,6 @@ export default function Backlog() {
                 {openAdder && (
                     <div className="bg-neutral-800 p-3 rounded-lg border border-neutral-700">
                         <Adder
-                            location="backlog"
                             api="/api/backlog"
                             onItemAdded={(newItem) => setItems(prev => [newItem as Item, ...prev])}
                         />

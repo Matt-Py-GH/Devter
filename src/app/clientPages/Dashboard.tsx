@@ -12,75 +12,114 @@ import Snippet from "../components/devterTools/snippet/Snippet";
 import { useState } from "react";
 
 //Lucide imports
-import { Notebook, LogsIcon, Terminal } from "lucide-react";
+import { Notebook, TableOfContents, Terminal, Paintbrush, LucideBug, FileCode2 } from "lucide-react";
 
 export default function DashboardClient() {
 
-    const toolStyle = "m-4"
-    const buttonStyle =
-        "cursor-pointer w-8 h-8 transition-transform duration-200 ease-in-out hover:-translate-y-1";
+    const toolStyle = "fixed top-16 left-0 w-full h-[calc(100vh-120px)] p-4 z-40";
+    const buttonStyle = "cursor-pointer w-8 h-8 transition-transform duration-200 ease-in-out hover:-translate-y-1";
     const iconSize = 32
 
-    const [errorLog, setErrorLog] = useState(false)
-    const [backlog, setBacklog] = useState(false)
-    const [paint, setPaint] = useState(false)
-    const [notebook, setNotebook] = useState(false)
-    const [snip, setSnip] = useState(false)
-    const [terminal, setTerminal] = useState(false)
+
+    const [tools, setTools] = useState({
+        errorLog: false,
+        backlog: false,
+        terminal: false,
+        snip: false,
+        notebook: false,
+        paint: false
+    })
 
     return (
         <>
             <Header />
             <main className="flex flex-col">
-                <section className="">
-                    <div className={toolStyle}>
-                        {!backlog && <Backlog />}
-                    </div>
+                <section>
+                    {tools.backlog && (
+                        <div className={toolStyle}>
+                            <Backlog />
+                        </div>
+                    )}
 
-                    <div className={toolStyle}>
-                        {errorLog && <ErrorLog />}
-                    </div>
+                    {tools.errorLog && (
+                        <div className={toolStyle}>
+                            <ErrorLog />
+                        </div>
+                    )}
 
-                    <div className={toolStyle}>
-                        {paint && <Paint />}
-                    </div>
+                    {tools.paint && (
+                        <div className={toolStyle}>
+                            <Paint />
+                        </div>
+                    )}
 
-                    <div className={toolStyle}>
-                        {snip && <Snippet />}
-                    </div>
+                    {tools.snip && (
+                        <div className={toolStyle}>
+                            <Snippet />
+                        </div>
+                    )}
 
-                    <div className={toolStyle}>
-                        {notebook && <Book />}
-                    </div>
+                    {tools.notebook && (
+                        <div className={toolStyle}>
+                            <Book />
+                        </div>
+                    )}
 
-                    <div className={toolStyle}>
-                        {terminal && <CMD />}
-                    </div>
+                    {tools.terminal && (
+                        <div className={toolStyle}>
+                            <CMD />
+                        </div>
+                    )}
+
                 </section>
 
-                <section className="flex gap-20 ml-100 bottom-3 items-center">
-                    <button className={buttonStyle}
-                        onClick={() => setNotebook(!notebook)}>
+                {/* Botonera inferior */}
+                <section className="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-10 items-center bg-neutral-900 p-3 rounded-xl shadow-lg z-50">
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: false, backlog: false,
+                        terminal: false, snip: false,
+                        notebook: true, paint: false
+                    })}>
                         <Notebook size={iconSize} />
                     </button>
-
-                    <button className={buttonStyle}
-                        onClick={() => setBacklog(!backlog)}>
-                        <LogsIcon size={iconSize} />
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: false, backlog: true,
+                        terminal: false, snip: false,
+                        notebook: false, paint: false
+                    })}>
+                        <TableOfContents size={iconSize} />
                     </button>
-
-                    <button className={buttonStyle}
-                        onClick={() => setTerminal(!terminal)}>
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: false, backlog: false,
+                        terminal: true, snip: false,
+                        notebook: false, paint: false
+                    })}>
                         <Terminal size={iconSize} />
                     </button>
-
-                    <button className={buttonStyle}></button>
-                    <button className={buttonStyle}></button>
-                    <button className={buttonStyle}></button>
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: false, backlog: false,
+                        terminal: false, snip: false,
+                        notebook: false, paint: true
+                    })}>
+                        <Paintbrush size={iconSize} />
+                    </button>
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: true, backlog: false,
+                        terminal: false, snip: false,
+                        notebook: false, paint: false
+                    })}>
+                        <LucideBug size={iconSize} />
+                    </button>
+                    <button className={buttonStyle} onClick={() => setTools({
+                        errorLog: false, backlog: false,
+                        terminal: false, snip: true,
+                        notebook: false, paint: false
+                    })}>
+                        <FileCode2 size={iconSize} />
+                    </button>
                 </section>
+
             </main>
         </>
     );
-
-
 }

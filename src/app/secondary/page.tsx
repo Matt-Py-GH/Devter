@@ -21,5 +21,5 @@ export default async function Secondary() {
         redirect("/login");
     }
 
-    return <SecondaryDashboard userName={session.user.name || "there!"} />;
+    return <SecondaryDashboard />;
 }
