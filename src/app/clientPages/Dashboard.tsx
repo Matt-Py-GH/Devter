@@ -10,7 +10,6 @@ import ErrorLog from "../components/devterTools/errorlog/ErrorLog";
 import CMD from "../components/devterTools/consola/CMD";
 import Book from "../components/devterTools/book/Book";
 import Snippet from "../components/devterTools/snippet/Snippet";
-import AltDashboard from "../components/alternate-dashboard/AltDashboard";
 
 //React imports
 import { useState } from "react";
