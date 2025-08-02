@@ -2,6 +2,7 @@
 
 "use client";
 
+//Componentes
 import Header from "../components/header/Header";
 import Backlog from "../components/devterTools/backlog/Backlog";
 import Paint from "../components/devterTools/pizarra/Pizarra";
@@ -9,6 +10,9 @@ import ErrorLog from "../components/devterTools/errorlog/ErrorLog";
 import CMD from "../components/devterTools/consola/CMD";
 import Book from "../components/devterTools/book/Book";
 import Snippet from "../components/devterTools/snippet/Snippet";
+import AltDashboard from "../components/alternate-dashboard/AltDashboard";
+
+//React imports
 import { useState } from "react";
 
 //Lucide imports
@@ -33,48 +37,18 @@ export default function DashboardClient() {
     return (
         <>
             <Header />
-            <main className="flex flex-col">
-                <section>
-                    {tools.backlog && (
-                        <div className={toolStyle}>
-                            <Backlog />
-                        </div>
-                    )}
-
-                    {tools.errorLog && (
-                        <div className={toolStyle}>
-                            <ErrorLog />
-                        </div>
-                    )}
-
-                    {tools.paint && (
-                        <div className={toolStyle}>
-                            <Paint />
-                        </div>
-                    )}
-
-                    {tools.snip && (
-                        <div className={toolStyle}>
-                            <Snippet />
-                        </div>
-                    )}
-
-                    {tools.notebook && (
-                        <div className={toolStyle}>
-                            <Book />
-                        </div>
-                    )}
-
-                    {tools.terminal && (
-                        <div className={toolStyle}>
-                            <CMD />
-                        </div>
-                    )}
-
+            <main className="relative flex flex-col">
+                <section className="">
+                    {tools.backlog && <div className={toolStyle}><Backlog /></div>}
+                    {tools.errorLog && <div className={toolStyle}><ErrorLog /></div>}
+                    {tools.paint && <div className={toolStyle}><Paint /></div>}
+                    {tools.snip && <div className={toolStyle}><Snippet /></div>}
+                    {tools.notebook && <div className={toolStyle}><Book /></div>}
+                    {tools.terminal && <div className={toolStyle}><CMD /></div>}
                 </section>
 
                 {/* Botonera inferior */}
-                <section className="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-10 items-center bg-neutral-900 p-3 rounded-xl shadow-lg z-50">
+                <section className="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-10 items-center bg-neutral-900 p-3 rounded-xl shadow-lg z-50 max-sm:gap-2">
                     <button className={buttonStyle} onClick={() => setTools({
                         errorLog: false, backlog: false,
                         terminal: false, snip: false,
