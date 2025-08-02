@@ -15,9 +15,36 @@ export const generateMetadata = (): Metadata => ({
     robots: {
         index: true,
         follow: true,
+        nocache: false, // Opcional, explícito
+        googleBot: {
+            index: true,
+            follow: true,
+        },
     },
-
+    openGraph: {
+        title: "Iniciar sesión | Devter",
+        description: "Inicia sesión en Devter para acceder a tus herramientas de desarrollo.",
+        url: "https://devter.dev/login",
+        siteName: "Devter",
+        type: "website",
+        images: [
+            {
+                url: "https://devter.dev/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "Devter Login",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Iniciar sesión | Devter",
+        description: "Inicia sesión en Devter para acceder a tus herramientas de desarrollo.",
+        images: ["https://devter.dev/og-login.png"],
+        creator: "@tu_usuario", // opcional si tenés cuenta X/Twitter
+    },
 });
+
 
 
 export default async function LoginPage() {
